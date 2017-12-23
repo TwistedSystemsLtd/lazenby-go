@@ -16,8 +16,13 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/TwistedSystemsLtd/lazenby-go/core"
+	"os"
+	"os/user"
+	"log"
+	"path"
+	"io/ioutil"
 )
 
 // genkeyCmd represents the genkey command
@@ -32,7 +37,51 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("genkey called")
+		publicKey, privateKey := core.GenerateUserKeys()
+
+		fmt.Println("PUBLIC KEY", core.ToHexString(publicKey[:]))
+		fmt.Println("PRIVATE KEY", core.ToHexString(privateKey[:]))
+
+		user, err := user.Current()
+		if err != nil {
+			log.Panic(err)
+		}
+
+		home := user.HomeDir
+		lazenhome := path.Join(home, ".lzb")
+
+		if _, err := os.Stat(lazenhome); os.IsNotExist(err) {
+			log.Print(fmt.Sprintf("No lazenhome exists, creating %s", lazenhome))
+			mkdirErr := os.Mkdir(lazenhome, os.ModeDir | 0700)
+			if mkdirErr != nil {
+				log.Panic("Error creating lazenhome", mkdirErr)
+			}
+		} else {
+			log.Print("lazenhome exists", lazenhome)
+		}
+
+		publicKeyFile := path.Join(lazenhome, "publickey")
+		privateKeyFile := path.Join(lazenhome, "privatekey")
+
+		_, pubKeyErr := os.Stat(publicKeyFile)
+		_, privKeyErr := os.Stat(privateKeyFile)
+
+		if os.IsNotExist(pubKeyErr) && os.IsNotExist(privKeyErr) {
+			log.Print(fmt.Sprintf("Creating keyfiles: %s / %s", publicKeyFile, privateKeyFile))
+			writeKeyFile(publicKeyFile, core.ToHexString(publicKey[:]))
+			writeKeyFile(privateKeyFile, core.ToHexString(privateKey[:]))
+
+		} else {
+			log.Panic("Keyfile(s) already present, aborting", pubKeyErr, privKeyErr)
+		}
 	},
+}
+
+func writeKeyFile(keyPath string, keyData string) {
+	keyErr := ioutil.WriteFile(keyPath, []byte(keyData), 0600)
+	if keyErr != nil {
+		log.Panic("Error writing key data", keyPath, keyErr)
+	}
 }
 
 func init() {

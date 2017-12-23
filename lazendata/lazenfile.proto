@@ -1,0 +1,17 @@
+syntax = "proto3";
+package lazendata;
+
+message Lazenfile {
+    map<string, Keypair> lazenkeys = 1;
+    repeated bytes secrets = 2;
+}
+
+message Keypair {
+    bytes public_key = 1;
+    bytes lazenkey = 2;
+}
+
+message RevealedSecret {
+    string name = 1;
+    string value = 2;
+}
