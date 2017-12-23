@@ -1,4 +1,4 @@
-// Copyright © 2017 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2017 Twisted Systems Ltd
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -77,12 +77,6 @@ func createLazenfile(lazenpath string) {
 	writeErr := ioutil.WriteFile(lazenpath, body, 0777)
 	if writeErr != nil {
 		log.Panic("Could not write lazenfile", writeErr)
-	}
-}
-
-func toBlocks(slices []string) {
-	for _, str := range slices {
-		fmt.Printf("(%s) len: %d\n", str, len(str))
 	}
 }
 
