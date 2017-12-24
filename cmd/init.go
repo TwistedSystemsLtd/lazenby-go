@@ -18,13 +18,8 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
-	"path"
 	"log"
 	"github.com/TwistedSystemsLtd/lazenby-go/core"
-	"github.com/TwistedSystemsLtd/lazenby-go/lazendata"
-	"github.com/golang/protobuf/proto"
-	"io/ioutil"
-	"strings"
 )
 
 // initCmd represents the init command
@@ -35,52 +30,17 @@ var initCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("init called")
 		var lazenfile = cmd.Flag("file").Value.String()
+		lazenpath := core.GetLazenpath(lazenfile)
 
-		var lazenpath string
-		if dir, err := os.Getwd(); err == nil {
-			if path.IsAbs(lazenfile) {
-				lazenpath = lazenfile
-			} else {
-				lazenpath = path.Join(dir, lazenfile)
-			}
-			if _, err := os.Stat(lazenpath); os.IsNotExist(err) {
-				log.Print(fmt.Sprintf("No lazenfile exists, creating %s", lazenpath))
-				createLazenfile(lazenpath)
-			} else {
-				log.Panic("Lazenfile already exists", lazenpath)
-			}
+		_, statErr := os.Stat(lazenpath)
+
+		if os.IsNotExist(statErr) {
+			log.Print(fmt.Sprintf("No lazenfile exists, creating %s", lazenpath))
+			core.CreateLazenfile(lazenpath)
 		} else {
-			log.Panic("Could not get current working directory")
+			log.Panic("Lazenfile already exists", lazenpath)
 		}
 	},
-}
-
-func createLazenfile(lazenpath string) {
-	lazenkey := core.GenerateLazenkey()
-	publicKey, privateKey := core.ReadUserKeys(core.Lazenhome())
-
-	lazenkeys := make(map[string]*lazendata.Keypair)
-	encryptedLazenKey := core.EncryptWithUserKey(publicKey, privateKey, lazenkey[:])
-
-	core.DecryptWithUserKey(publicKey, privateKey, encryptedLazenKey)
-
-	keypair := &lazendata.Keypair{PublicKey: publicKey[:], Lazenkey: encryptedLazenKey}
-	lazenkeys[core.ToHexString(publicKey[:])] = keypair
-
-	lazenfile := &lazendata.Lazenfile{Lazenkeys: lazenkeys, Secrets: nil}
-	lazenbytes, err := proto.Marshal(lazenfile)
-	if err != nil {
-		log.Panic("Error marshalling lazenfile", err)
-	}
-
-	hexString := core.ToHexString(lazenbytes)
-	chunks := core.Chunk(hexString)
-	body := []byte(strings.Join(chunks, "\n"))
-
-	writeErr := ioutil.WriteFile(lazenpath, body, 0777)
-	if writeErr != nil {
-		log.Panic("Could not write lazenfile", writeErr)
-	}
 }
 
 func init() {

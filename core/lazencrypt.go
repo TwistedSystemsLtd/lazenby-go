@@ -10,6 +10,8 @@ import (
 	"path"
 	"os/user"
 	"fmt"
+	"golang.org/x/crypto/nacl/secretbox"
+	"github.com/TwistedSystemsLtd/lazenby-go/lazendata"
 )
 
 func genKey() [32]byte {
@@ -65,8 +67,7 @@ func GenerateLazenkey() [32]byte {
 func EncryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, plaintext []byte) []byte {
 	fmt.Println("Plaintext", ToHexString(plaintext))
 	nonce := Nonce()
-	result := box.Seal(nonce[:], plaintext, &nonce, publicKey, privateKey)
-	return result
+	return box.Seal(nonce[:], plaintext, &nonce, publicKey, privateKey)
 }
 
 func DecryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, encrypted []byte) []byte {
@@ -82,6 +83,31 @@ func DecryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, encrypted []b
 	return decrypted
 }
 
+func EncryptWithLazenkey(lazenkey *[32]byte, plaintext []byte) []byte {
+	nonce := Nonce()
+	return secretbox.Seal(nonce[:], plaintext, &nonce, lazenkey)
+}
+
+func DecryptWithLazenkey(lazenkey *[32]byte, encrypted []byte) []byte {
+	var decryptNonce [24]byte
+	copy(decryptNonce[:], encrypted[:24])
+	decrypted, ok := secretbox.Open(nil, encrypted[24:], &decryptNonce, lazenkey)
+	if !ok {
+		panic("decryption error")
+	}
+	return decrypted
+}
+
+func DecryptLazenkey(publicKey *[32]byte, privateKey *[32]byte, lazendata *lazendata.Lazenfile) *[32]byte {
+	usersEncryptedLazenkey := lazendata.Lazenkeys[ToHexString(publicKey[:])]
+	var lazenkey [32]byte
+
+	result := DecryptWithUserKey(publicKey, privateKey, usersEncryptedLazenkey.Lazenkey)
+
+	copy(lazenkey[:], result[:32])
+	return &lazenkey
+}
+
 func GenerateUserKeys() (*[32]byte, *[32]byte) {
 	senderPublicKey, senderPrivateKey, err := generateUserKeys()
 	if err != nil {
@@ -92,6 +118,14 @@ func GenerateUserKeys() (*[32]byte, *[32]byte) {
 
 func ToHexString(bytes []byte) string {
 	return hex.EncodeToString(bytes)
+}
+
+func FromHexString(hexString string) []byte {
+	result, err := hex.DecodeString(hexString)
+	if err != nil {
+		log.Panic("Error decoding hex string")
+	}
+	return result
 }
 
 func Chunk(longString string) []string {
