@@ -19,7 +19,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/TwistedSystemsLtd/lazenby-go/core"
 	"os"
-	"os/user"
 	"log"
 	"path"
 	"io/ioutil"
@@ -42,17 +41,12 @@ to quickly create a Cobra application.`,
 		fmt.Println("PUBLIC KEY", core.ToHexString(publicKey[:]))
 		fmt.Println("PRIVATE KEY", core.ToHexString(privateKey[:]))
 
-		user, err := user.Current()
-		if err != nil {
-			log.Panic(err)
-		}
 
-		home := user.HomeDir
-		lazenhome := path.Join(home, ".lzb")
+		lazenhome := core.Lazenhome()
 
 		if _, err := os.Stat(lazenhome); os.IsNotExist(err) {
 			log.Print(fmt.Sprintf("No lazenhome exists, creating %s", lazenhome))
-			mkdirErr := os.Mkdir(lazenhome, os.ModeDir | 0700)
+			mkdirErr := os.Mkdir(lazenhome, os.ModeDir|0700)
 			if mkdirErr != nil {
 				log.Panic("Error creating lazenhome", mkdirErr)
 			}

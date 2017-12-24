@@ -2,12 +2,14 @@ package core
 
 import (
 	"io"
-	"golang.org/x/crypto/nacl/secretbox"
 	"crypto/rand"
 	"log"
-	"fmt"
 	"encoding/hex"
 	"golang.org/x/crypto/nacl/box"
+	"io/ioutil"
+	"path"
+	"os/user"
+	"fmt"
 )
 
 func genKey() [32]byte {
@@ -19,20 +21,33 @@ func genKey() [32]byte {
 	return buffer
 }
 
-func main() {
-	nonce := Nonce()
-	key := genKey()
-	encrypted := secretbox.Seal(nonce[:], []byte("My Secret Message"), &nonce, &key)
-	result := hex.EncodeToString(encrypted)
-	fmt.Println(result)
-}
-
 func generateUserKeys() (*[32]byte, *[32]byte, error) {
 	senderPublicKey, senderPrivateKey, err := box.GenerateKey(rand.Reader)
 	if err != nil {
 		panic(err)
 	}
 	return senderPublicKey, senderPrivateKey, err
+}
+
+func ReadUserKeys(userKeyDir string) (*[32]byte, *[32]byte) {
+	publicKey, publicErr := ioutil.ReadFile(path.Join(userKeyDir, "publicKey"))
+	privateKey, privateErr := ioutil.ReadFile(path.Join(userKeyDir, "privateKey"))
+
+	if publicErr != nil || privateErr != nil {
+		log.Panic("Could not read user keys", userKeyDir)
+	}
+
+	var publicBytes [32]byte
+	var privateBytes [32]byte
+
+	_, pubDecodeErr := hex.Decode(publicBytes[:], publicKey)
+	_, prvDecodeErr := hex.Decode(privateBytes[:], privateKey)
+
+	if pubDecodeErr != nil || prvDecodeErr != nil {
+		log.Panic("Could not decode user key data")
+	}
+
+	return &publicBytes, &privateBytes
 }
 
 func Nonce() [24]byte {
@@ -47,10 +62,24 @@ func GenerateLazenkey() [32]byte {
 	return genKey()
 }
 
-func EncryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, plaintext []byte) *[]byte {
+func EncryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, plaintext []byte) []byte {
+	fmt.Println("Plaintext", ToHexString(plaintext))
 	nonce := Nonce()
 	result := box.Seal(nonce[:], plaintext, &nonce, publicKey, privateKey)
-	return &result
+	return result
+}
+
+func DecryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, encrypted []byte) []byte {
+	var decryptNonce [24]byte
+	copy(decryptNonce[:], encrypted[:24])
+	decrypted, ok := box.Open(nil, encrypted[24:], &decryptNonce, publicKey, privateKey)
+	if !ok {
+		panic("decryption error")
+	}
+
+	fmt.Println("Decrypted", ToHexString(decrypted))
+
+	return decrypted
 }
 
 func GenerateUserKeys() (*[32]byte, *[32]byte) {
@@ -67,11 +96,10 @@ func ToHexString(bytes []byte) string {
 
 func Chunk(longString string) []string {
 	chunkSize := 80 // in bytes
-	//longString := "Juni månad blev den varmaste sedan mätningarna började för 135 år sedan, meddelar vetenskapsinstitutet National Oceanic and Atmospheric Administration (NOAA) i USA i sin månadsrapport."
-	slices := []string{}
+	var slices []string
 	lastIndex := 0
 	lastI := 0
-	for i, _ := range longString {
+	for i := range longString {
 		if i-lastIndex > chunkSize {
 			slices = append(slices, longString[lastIndex:lastI])
 			lastIndex = lastI
@@ -86,4 +114,14 @@ func Chunk(longString string) []string {
 	}
 
 	return append(slices, "")
+}
+
+func Lazenhome() string {
+	currentUser, err := user.Current()
+	if err != nil {
+		log.Panic(err)
+	}
+
+	home := currentUser.HomeDir
+	return path.Join(home, ".lzb")
 }
