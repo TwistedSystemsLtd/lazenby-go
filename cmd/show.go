@@ -15,11 +15,12 @@
 package cmd
 
 import (
+	"bytes"
 	"fmt"
-	"github.com/spf13/cobra"
 	"github.com/TwistedSystemsLtd/lazenby-go/core"
 	"github.com/TwistedSystemsLtd/lazenby-go/lazendata"
-	"github.com/golang/protobuf/proto"
+	"github.com/spf13/cobra"
+	"github.com/ugorji/go/codec"
 )
 
 // showCmd represents the show command
@@ -45,10 +46,14 @@ to quickly create a Cobra application.`,
 
 		parsedSecret := &lazendata.RevealedSecret{}
 
-		for _, secretBytes := range lazenfile.GetSecrets() {
-			revealedBytes := core.DecryptWithLazenkey(lazenkey, secretBytes)
+		for _, secret := range lazenfile.Secrets {
+			secretBytes := core.DecodeString(secret)
 
-			proto.Unmarshal(revealedBytes, parsedSecret)
+			revealedBytes := bytes.NewBuffer(core.DecryptWithLazenkey(lazenkey, secretBytes))
+
+			var ch codec.CborHandle
+			dec := codec.NewDecoderBytes(revealedBytes.Bytes(), &ch)
+			dec.Decode(&parsedSecret)
 
 			fmt.Println(parsedSecret.Name, "=", parsedSecret.Value)
 		}

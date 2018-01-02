@@ -16,10 +16,11 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"github.com/TwistedSystemsLtd/lazenby-go/core"
 	"github.com/TwistedSystemsLtd/lazenby-go/lazendata"
-	"github.com/golang/protobuf/proto"
+	"github.com/spf13/cobra"
+	"github.com/ugorji/go/codec"
+	"golang.org/x/crypto/ripemd160"
 	"log"
 )
 
@@ -47,14 +48,25 @@ to quickly create a Cobra application.`,
 
 		revealedSecret := &lazendata.RevealedSecret{Name: key, Value:value}
 
-		revealedBytes, err := proto.Marshal(revealedSecret)
+		var revealedBytes []byte
+		var ch codec.CborHandle
+		enc := codec.NewEncoderBytes(&revealedBytes, &ch)
+
+		err := enc.Encode(revealedSecret)
 
 		if err != nil {
 			log.Panic("Error marshalling secret", err)
 		}
 
 		encryptedSecret := core.EncryptWithLazenkey(lazenkey, revealedBytes)
-		lazenfile.Secrets = append(lazenfile.Secrets, encryptedSecret)
+
+		secret := core.EncodeString(encryptedSecret)
+
+		hasher := ripemd160.New()
+		hasher.Write([]byte(key))
+
+		lazenfile.Secrets[core.EncodeString(hasher.Sum(nil))] = secret
+
 
 		core.SaveLazenFile(lazenpath, lazenfile)
 	},

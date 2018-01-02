@@ -1,17 +1,17 @@
 package core
 
 import (
-	"io"
 	"crypto/rand"
-	"log"
+	"encoding/base64"
 	"encoding/hex"
-	"golang.org/x/crypto/nacl/box"
-	"io/ioutil"
-	"path"
-	"os/user"
-	"fmt"
-	"golang.org/x/crypto/nacl/secretbox"
 	"github.com/TwistedSystemsLtd/lazenby-go/lazendata"
+	"golang.org/x/crypto/nacl/box"
+	"golang.org/x/crypto/nacl/secretbox"
+	"io"
+	"io/ioutil"
+	"log"
+	"os/user"
+	"path"
 )
 
 func genKey() [32]byte {
@@ -42,8 +42,8 @@ func ReadUserKeys(userKeyDir string) (*[32]byte, *[32]byte) {
 	var publicBytes [32]byte
 	var privateBytes [32]byte
 
-	_, pubDecodeErr := hex.Decode(publicBytes[:], publicKey)
-	_, prvDecodeErr := hex.Decode(privateBytes[:], privateKey)
+	_, pubDecodeErr := base64.RawURLEncoding.Decode(publicBytes[:], publicKey)
+	_, prvDecodeErr := base64.RawURLEncoding.Decode(privateBytes[:], privateKey)
 
 	if pubDecodeErr != nil || prvDecodeErr != nil {
 		log.Panic("Could not decode user key data")
@@ -65,7 +65,6 @@ func GenerateLazenkey() [32]byte {
 }
 
 func EncryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, plaintext []byte) []byte {
-	fmt.Println("Plaintext", ToHexString(plaintext))
 	nonce := Nonce()
 	return box.Seal(nonce[:], plaintext, &nonce, publicKey, privateKey)
 }
@@ -77,8 +76,6 @@ func DecryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, encrypted []b
 	if !ok {
 		panic("decryption error")
 	}
-
-	fmt.Println("Decrypted", ToHexString(decrypted))
 
 	return decrypted
 }
@@ -99,10 +96,10 @@ func DecryptWithLazenkey(lazenkey *[32]byte, encrypted []byte) []byte {
 }
 
 func DecryptLazenkey(publicKey *[32]byte, privateKey *[32]byte, lazendata *lazendata.Lazenfile) *[32]byte {
-	usersEncryptedLazenkey := lazendata.Lazenkeys[ToHexString(publicKey[:])]
+	usersEncryptedLazenkey := lazendata.Lazenkeys[EncodeString(publicKey[:])]
 	var lazenkey [32]byte
 
-	result := DecryptWithUserKey(publicKey, privateKey, usersEncryptedLazenkey.Lazenkey)
+	result := DecryptWithUserKey(publicKey, privateKey, DecodeString(usersEncryptedLazenkey))
 
 	copy(lazenkey[:], result[:32])
 	return &lazenkey
@@ -116,38 +113,16 @@ func GenerateUserKeys() (*[32]byte, *[32]byte) {
 	return senderPublicKey, senderPrivateKey
 }
 
-func ToHexString(bytes []byte) string {
-	return hex.EncodeToString(bytes)
+func EncodeString(bytes []byte) string {
+	return base64.URLEncoding.EncodeToString(bytes)
 }
 
-func FromHexString(hexString string) []byte {
-	result, err := hex.DecodeString(hexString)
+func DecodeString(base64String string) []byte {
+	result, err := base64.URLEncoding.DecodeString(base64String)
 	if err != nil {
-		log.Panic("Error decoding hex string")
+		log.Panic("Error decoding base64 string")
 	}
 	return result
-}
-
-func Chunk(longString string) []string {
-	chunkSize := 80 // in bytes
-	var slices []string
-	lastIndex := 0
-	lastI := 0
-	for i := range longString {
-		if i-lastIndex > chunkSize {
-			slices = append(slices, longString[lastIndex:lastI])
-			lastIndex = lastI
-		}
-		lastI = i
-	}
-	// handle the leftovers at the end
-	if len(longString)-lastIndex > chunkSize {
-		slices = append(slices, longString[lastIndex:lastIndex+chunkSize], longString[lastIndex+chunkSize:])
-	} else {
-		slices = append(slices, longString[lastIndex:])
-	}
-
-	return append(slices, "")
 }
 
 func Lazenhome() string {

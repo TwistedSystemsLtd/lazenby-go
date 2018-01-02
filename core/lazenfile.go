@@ -39,3 +39,27 @@ func ReadLazenFile(lazenfilePath string) *lazendata.Lazenfile {
 	lf := new(LazenToml)
 	return lf.ReadLazenFile(lazenfilePath)
 }
+
+func NewLazenFile() *lazendata.Lazenfile {
+	lazenkey := GenerateLazenkey()
+	publicKey, privateKey := ReadUserKeys(Lazenhome())
+
+	lazenkeys := make(map[string]string)
+	encryptedLazenKey := EncryptWithUserKey(publicKey, privateKey, lazenkey[:])
+
+	DecryptWithUserKey(publicKey, privateKey, encryptedLazenKey)
+
+	currentUser := CurrentUser()
+	username := currentUser.Username
+	name := currentUser.Name
+
+	tags := []string{username}
+	if  name  != "" {
+		tags = append(tags, name)
+	}
+
+	keypair := EncodeString(encryptedLazenKey)
+	lazenkeys[EncodeString(publicKey[:])] = keypair
+
+	return &lazendata.Lazenfile{Lazenkeys: lazenkeys, Secrets: make(map[string]string)}
+}

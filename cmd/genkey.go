@@ -38,8 +38,8 @@ to quickly create a Cobra application.`,
 		fmt.Println("genkey called")
 		publicKey, privateKey := core.GenerateUserKeys()
 
-		fmt.Println("PUBLIC KEY", core.ToHexString(publicKey[:]))
-		fmt.Println("PRIVATE KEY", core.ToHexString(privateKey[:]))
+		fmt.Println("PUBLIC KEY", core.EncodeString(publicKey[:]))
+		fmt.Println("PRIVATE KEY", core.EncodeString(privateKey[:]))
 
 
 		lazenhome := core.Lazenhome()
@@ -62,8 +62,8 @@ to quickly create a Cobra application.`,
 
 		if os.IsNotExist(pubKeyErr) && os.IsNotExist(privKeyErr) {
 			log.Print(fmt.Sprintf("Creating keyfiles: %s / %s", publicKeyFile, privateKeyFile))
-			writeKeyFile(publicKeyFile, core.ToHexString(publicKey[:]))
-			writeKeyFile(privateKeyFile, core.ToHexString(privateKey[:]))
+			writeKeyFile(publicKeyFile, core.EncodeString(publicKey[:]))
+			writeKeyFile(privateKeyFile, core.EncodeString(privateKey[:]))
 
 		} else {
 			log.Panic("Keyfile(s) already present, aborting", pubKeyErr, privKeyErr)

@@ -26,27 +26,7 @@ func (p *LazenToml) ReadLazenFile(lazenpath string) *lazendata.Lazenfile {
 
 
 func createLazenTomlFile(lazenfilePath string) {
-	lazenkey := GenerateLazenkey()
-	publicKey, privateKey := ReadUserKeys(Lazenhome())
-
-	lazenkeys := make(map[string]*lazendata.Keypair)
-	encryptedLazenKey := EncryptWithUserKey(publicKey, privateKey, lazenkey[:])
-
-	DecryptWithUserKey(publicKey, privateKey, encryptedLazenKey)
-
-	currentUser := CurrentUser()
-	username := currentUser.Username
-	name := currentUser.Name
-
-	tags := []string{username}
-	if  name  != "" {
-		tags = append(tags, name)
-	}
-
-	keypair := &lazendata.Keypair{PublicKey: publicKey[:], Lazenkey: encryptedLazenKey, Tags: tags}
-	lazenkeys[ToHexString(publicKey[:])] = keypair
-
-	lazenfile := &lazendata.Lazenfile{Lazenkeys: lazenkeys, Secrets: nil}
+	lazenfile := NewLazenFile()
 	saveLazenTomlFile(lazenfilePath, lazenfile)
 }
 
