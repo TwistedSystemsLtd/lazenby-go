@@ -9,6 +9,7 @@ message Lazenfile {
 message Keypair {
     bytes public_key = 1;
     bytes lazenkey = 2;
+    repeated string tags = 3;
 }
 
 message RevealedSecret {

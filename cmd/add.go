@@ -56,14 +56,14 @@ to quickly create a Cobra application.`,
 		encryptedSecret := core.EncryptWithLazenkey(lazenkey, revealedBytes)
 		lazenfile.Secrets = append(lazenfile.Secrets, encryptedSecret)
 
-		core.SaveLazenfile(lazenpath, lazenfile)
+		core.SaveLazenFile(lazenpath, lazenfile)
 	},
 }
 
 
 func openLazenfile(lazenfile string) *lazendata.Lazenfile {
 	lazenpath := core.GetLazenpath(lazenfile)
-	return core.ReadLazenfile(lazenpath)
+	return core.ReadLazenFile(lazenpath)
 }
 
 func init() {

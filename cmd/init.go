@@ -36,7 +36,7 @@ var initCmd = &cobra.Command{
 
 		if os.IsNotExist(statErr) {
 			log.Print(fmt.Sprintf("No lazenfile exists, creating %s", lazenpath))
-			core.CreateLazenfile(lazenpath)
+			core.CreateLazenFile(lazenpath)
 		} else {
 			log.Panic("Lazenfile already exists", lazenpath)
 		}

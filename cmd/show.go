@@ -37,7 +37,7 @@ to quickly create a Cobra application.`,
 		var lazenfilename = cmd.Flag("file").Value.String()
 		lazenpath := core.GetLazenpath(lazenfilename)
 
-		lazenfile := core.ReadLazenfile(lazenpath)
+		lazenfile := core.ReadLazenFile(lazenpath)
 
 		publicKey, privateKey := core.ReadUserKeys(core.Lazenhome())
 

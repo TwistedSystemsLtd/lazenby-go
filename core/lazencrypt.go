@@ -151,11 +151,16 @@ func Chunk(longString string) []string {
 }
 
 func Lazenhome() string {
+	currentUser := CurrentUser()
+
+	home := currentUser.HomeDir
+	return path.Join(home, ".lzb")
+}
+
+func CurrentUser() *user.User {
 	currentUser, err := user.Current()
 	if err != nil {
 		log.Panic(err)
 	}
-
-	home := currentUser.HomeDir
-	return path.Join(home, ".lzb")
+	return currentUser
 }
