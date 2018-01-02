@@ -2,18 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7499c805-3703-4d31-a65f-fa2ca4f51f68" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/lazendata/Lazenfile.go" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/cmd/add.go" afterPath="$PROJECT_DIR$/cmd/add.go" />
       <change beforePath="$PROJECT_DIR$/cmd/genkey.go" afterPath="$PROJECT_DIR$/cmd/genkey.go" />
+      <change beforePath="$PROJECT_DIR$/cmd/init.go" afterPath="$PROJECT_DIR$/cmd/init.go" />
+      <change beforePath="$PROJECT_DIR$/cmd/root.go" afterPath="$PROJECT_DIR$/cmd/root.go" />
       <change beforePath="$PROJECT_DIR$/cmd/show.go" afterPath="$PROJECT_DIR$/cmd/show.go" />
       <change beforePath="$PROJECT_DIR$/core/lazencrypt.go" afterPath="$PROJECT_DIR$/core/lazencrypt.go" />
       <change beforePath="$PROJECT_DIR$/core/lazenfile.go" afterPath="$PROJECT_DIR$/core/lazenfile.go" />
-      <change beforePath="$PROJECT_DIR$/core/lazenjson.go" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/lazenproto.go" afterPath="" />
       <change beforePath="$PROJECT_DIR$/core/lazentoml.go" afterPath="$PROJECT_DIR$/core/lazentoml.go" />
-      <change beforePath="$PROJECT_DIR$/lazendata/lazenfile.pb.go" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/lazendata/lazenfile.proto" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/lazendata/Lazenfile.go" afterPath="$PROJECT_DIR$/lazendata/Lazenfile.go" />
+      <change beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
+      <change beforePath="$PROJECT_DIR$/toml/lazentoml.go" afterPath="$PROJECT_DIR$/toml/lazentoml.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,57 +24,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="2" lean-forward="true" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="lazenfile.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/lazenfile.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="63" column="59" lean-forward="false" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+            <state relative-caret-position="272">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
-                <element signature="e#14#98#0" expanded="true" />
+                <element signature="e#743#827#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="genkey.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/genkey.go">
+      <file leaf-file-name="lazentoml.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/lazentoml.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="38" column="56" lean-forward="false" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
+            <state relative-caret-position="272">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
-                <element signature="e#612#737#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="show.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/show.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="55" column="37" lean-forward="true" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="decode.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../ugorji/go/codec/decode.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="1850" column="5" lean-forward="false" selection-start-line="1850" selection-start-column="5" selection-end-line="1850" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lazencrypt.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/lazencrypt.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="115" column="5" lean-forward="false" selection-start-line="115" selection-start-column="5" selection-end-line="115" selection-end-column="5" />
-              <folding>
-                <element signature="e#14#242#0" expanded="true" />
+                <element signature="e#743#878#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,50 +61,72 @@
       <file leaf-file-name="Lazenfile.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lazendata/Lazenfile.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="272">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cmd/add.go">
+      <file leaf-file-name="lazentoml.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/toml/lazentoml.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="78" column="1" lean-forward="true" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
+            <state relative-caret-position="255">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="genkey.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/genkey.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
-                <element signature="e#612#826#0" expanded="true" />
+                <element signature="e#742#867#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="encode.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../ugorji/go/codec/encode.go">
+      <file leaf-file-name="init.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/init.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="917" column="5" lean-forward="false" selection-start-line="917" selection-start-column="5" selection-end-line="917" selection-end-column="5" />
+            <state relative-caret-position="255">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hash.go" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/Cellar/go/1.9.2/libexec/src/hash/hash.go">
+      <file leaf-file-name="show.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/show.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+            <state relative-caret-position="0">
+              <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="io.go" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/Cellar/go/1.9.2/libexec/src/io/io.go">
+      <file leaf-file-name="lazencrypt.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/lazencrypt.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="90" column="4" lean-forward="false" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="4" />
+            <state relative-caret-position="272">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding>
+                <element signature="e#743#971#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="root.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/root.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -154,10 +154,10 @@
       <find>T</find>
       <find>ToBase64String</find>
       <find>FromHex</find>
-      <find>ToHexString</find>
       <find>ToHe</find>
       <find>ReadUser</find>
       <find>plaintext</find>
+      <find>ToHexString</find>
     </findStrings>
     <replaceStrings>
       <replace>Twisted Systems Ltd</replace>
@@ -175,28 +175,28 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/.goreleaser.yml" />
         <option value="$PROJECT_DIR$/person.proto" />
         <option value="$PROJECT_DIR$/person.pb.go" />
-        <option value="$PROJECT_DIR$/cmd/root.go" />
         <option value="$PROJECT_DIR$/lazencrypto/lazencrypto.go" />
         <option value="$PROJECT_DIR$/lazenfile.proto" />
         <option value="$PROJECT_DIR$/lazencrypt.go" />
         <option value="$PROJECT_DIR$/lazendata/lazentoml.go" />
-        <option value="$PROJECT_DIR$/toml/lazentoml.go" />
         <option value="$PROJECT_DIR$/lazendata/lazenfile.proto" />
-        <option value="$PROJECT_DIR$/cmd/init.go" />
         <option value="$PROJECT_DIR$/core/lazenproto.go" />
         <option value="$PROJECT_DIR$/lazendata/LazenFile.go" />
-        <option value="$PROJECT_DIR$/core/lazentoml.go" />
         <option value="$PROJECT_DIR$/core/lazenjson.go" />
-        <option value="$PROJECT_DIR$/cmd/genkey.go" />
-        <option value="$PROJECT_DIR$/lazendata/Lazenfile.go" />
-        <option value="$PROJECT_DIR$/core/lazenfile.go" />
-        <option value="$PROJECT_DIR$/cmd/show.go" />
         <option value="$PROJECT_DIR$/cmd/add.go" />
+        <option value="$PROJECT_DIR$/cmd/genkey.go" />
+        <option value="$PROJECT_DIR$/cmd/init.go" />
+        <option value="$PROJECT_DIR$/cmd/root.go" />
+        <option value="$PROJECT_DIR$/cmd/show.go" />
         <option value="$PROJECT_DIR$/core/lazencrypt.go" />
+        <option value="$PROJECT_DIR$/core/lazenfile.go" />
+        <option value="$PROJECT_DIR$/core/lazentoml.go" />
+        <option value="$PROJECT_DIR$/lazendata/Lazenfile.go" />
+        <option value="$PROJECT_DIR$/toml/lazentoml.go" />
+        <option value="$PROJECT_DIR$/main.go" />
       </list>
     </option>
   </component>
@@ -263,21 +263,6 @@
               <item name="lazenby-go" type="462c0819:PsiDirectoryNode" />
               <item name="toml" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="lazenby-go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="lazenby-go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Go SDK 1.9.2" type="20ee2d1f:SyntheticLibraryElementNode" />
-            </path>
-            <path>
-              <item name="lazenby-go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Go SDK 1.9.2" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -288,7 +273,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="GO_FMT" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
   </component>
   <component name="RecentsManager">
@@ -402,7 +387,8 @@
     <MESSAGE value="Add decrypt" />
     <MESSAGE value="Add show and add commands" />
     <MESSAGE value="Trying out TOML" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trying out TOML" />
+    <MESSAGE value="Use CBOR for structs, remove unused serialisation code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Use CBOR for structs, remove unused serialisation code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -414,7 +400,7 @@
         <state relative-caret-position="442">
           <caret line="33" column="48" lean-forward="true" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
           <folding>
-            <element signature="e#702#813#0" expanded="false" />
+            <element signature="e#742#853#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -446,16 +432,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#242#0" expanded="true" />
+            <element signature="e#743#971#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="9" lean-forward="false" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -472,16 +450,6 @@
         <state relative-caret-position="153">
           <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/root.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="925">
-          <caret line="76" column="95" lean-forward="false" selection-start-line="76" selection-start-column="95" selection-end-line="76" selection-end-column="95" />
-          <folding>
-            <element signature="e#702#813#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -597,14 +565,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/toml/lazentoml.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lazendata/lazenfile.proto">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -661,16 +621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/init.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="38" column="28" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
-          <folding>
-            <element signature="e#612#716#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/lazenproto.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
@@ -711,16 +661,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/lazentoml.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="28" column="17" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="e#14#149#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/lazenjson.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -733,24 +673,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
           <caret line="108" column="4" lean-forward="false" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/genkey.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="38" column="56" lean-forward="false" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
-          <folding>
-            <element signature="e#612#737#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lazendata/Lazenfile.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -771,16 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/lazenfile.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="63" column="59" lean-forward="false" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
-          <folding>
-            <element signature="e#14#98#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../ugorji/go/codec/encode.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
@@ -797,31 +709,101 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/add.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#743#957#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/genkey.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#742#867#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/init.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/root.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/show.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="55" column="37" lean-forward="true" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
+        <state relative-caret-position="0">
+          <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/lazencrypt.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="115" column="5" lean-forward="false" selection-start-line="115" selection-start-column="5" selection-end-line="115" selection-end-column="5" />
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#14#242#0" expanded="true" />
+            <element signature="e#743#971#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/add.go">
+    <entry file="file://$PROJECT_DIR$/core/lazenfile.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="78" column="1" lean-forward="true" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#612#826#0" expanded="true" />
+            <element signature="e#743#827#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lazentoml.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="e#743#878#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lazendata/Lazenfile.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/toml/lazentoml.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="2" lean-forward="true" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+          <folding />
         </state>
       </provider>
     </entry>
