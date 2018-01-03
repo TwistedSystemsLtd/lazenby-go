@@ -61,9 +61,9 @@ func NewLazenFile() *lazendata.Lazenfile {
 	publicKey, privateKey := ReadUserKeys(Lazenhome())
 
 	lazenkeys := make(map[string]string)
-	encryptedLazenKey := EncryptWithUserKey(publicKey, privateKey, lazenkey[:])
+	encryptedLazenKey := EncryptWithUserKey(publicKey, privateKey, publicKey, lazenkey[:])
 
-	DecryptWithUserKey(publicKey, privateKey, encryptedLazenKey)
+	DecryptWithUserKey(privateKey, encryptedLazenKey) // Check
 
 	currentUser := CurrentUser()
 	username := currentUser.Username

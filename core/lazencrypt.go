@@ -19,7 +19,7 @@ package core
 import (
 	"crypto/rand"
 	"encoding/base64"
-	"encoding/hex"
+	"fmt"
 	"github.com/TwistedSystemsLtd/lazenby-go/lazendata"
 	"golang.org/x/crypto/nacl/box"
 	"golang.org/x/crypto/nacl/secretbox"
@@ -48,24 +48,27 @@ func generateUserKeys() (*[32]byte, *[32]byte, error) {
 }
 
 func ReadUserKeys(userKeyDir string) (*[32]byte, *[32]byte) {
-	publicKey, publicErr := ioutil.ReadFile(path.Join(userKeyDir, "publicKey"))
-	privateKey, privateErr := ioutil.ReadFile(path.Join(userKeyDir, "privateKey"))
+	publicKeyByteString, publicErr := ioutil.ReadFile(path.Join(userKeyDir, "publicKey"))
+	privateKeyByteString, privateErr := ioutil.ReadFile(path.Join(userKeyDir, "privateKey"))
 
 	if publicErr != nil || privateErr != nil {
 		log.Panic("Could not read user keys", userKeyDir)
 	}
 
-	var publicBytes [32]byte
-	var privateBytes [32]byte
+	return DecodeKeyStrings(string(publicKeyByteString), string(privateKeyByteString))
+}
 
-	_, pubDecodeErr := base64.RawURLEncoding.Decode(publicBytes[:], publicKey)
-	_, prvDecodeErr := base64.RawURLEncoding.Decode(privateBytes[:], privateKey)
+func DecodeKeyStrings(publicKey string, privateKey string) (*[32]byte, *[32]byte) {
+	publicBytes := DecodeString(publicKey)
+	privateBytes := DecodeString(privateKey)
 
-	if pubDecodeErr != nil || prvDecodeErr != nil {
-		log.Panic("Could not decode user key data")
-	}
+	return ToKeyByteArray(publicBytes), ToKeyByteArray(privateBytes)
+}
 
-	return &publicBytes, &privateBytes
+func ToKeyByteArray(keySlice []byte) *[32]byte {
+	var keyBytes [32]byte
+	copy(keyBytes[:], keySlice)
+	return &keyBytes
 }
 
 func Nonce() [24]byte {
@@ -80,15 +83,28 @@ func GenerateLazenkey() [32]byte {
 	return genKey()
 }
 
-func EncryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, plaintext []byte) []byte {
+func EncryptWithUserKey(publicEncryptionKey *[32]byte, privateSigningKey *[32]byte, publicSigningKey *[32] byte, plaintext []byte) []byte {
 	nonce := Nonce()
-	return box.Seal(nonce[:], plaintext, &nonce, publicKey, privateKey)
+	preamble := append(nonce[:], publicSigningKey[:]...)
+
+	println(len(preamble))
+
+	return box.Seal(preamble, plaintext, &nonce, publicEncryptionKey, privateSigningKey)
 }
 
-func DecryptWithUserKey(publicKey *[32]byte, privateKey *[32]byte, encrypted []byte) []byte {
+func DecryptWithUserKey(privateDecryptionKey *[32]byte, encrypted []byte) []byte {
+	log.Println(len(encrypted))
+	log.Println(EncodeString(encrypted))
 	var decryptNonce [24]byte
+	var publicSigningKey [32]byte
+
+	log.Println(len(encrypted[:24]))
 	copy(decryptNonce[:], encrypted[:24])
-	decrypted, ok := box.Open(nil, encrypted[24:], &decryptNonce, publicKey, privateKey)
+
+	fmt.Println(len(encrypted[24:(32+24)]))
+	copy(publicSigningKey[:], encrypted[24:(32+24)])
+
+	decrypted, ok := box.Open(nil, encrypted[(32+24):], &decryptNonce, &publicSigningKey, privateDecryptionKey)
 	if !ok {
 		panic("decryption error")
 	}
@@ -113,9 +129,13 @@ func DecryptWithLazenkey(lazenkey *[32]byte, encrypted []byte) []byte {
 
 func DecryptLazenkey(publicKey *[32]byte, privateKey *[32]byte, lazendata *lazendata.Lazenfile) *[32]byte {
 	usersEncryptedLazenkey := lazendata.Lazenkeys[EncodeString(publicKey[:])]
+
+	log.Println("Users lazenkey", usersEncryptedLazenkey)
+
+
 	var lazenkey [32]byte
 
-	result := DecryptWithUserKey(publicKey, privateKey, DecodeString(usersEncryptedLazenkey))
+	result := DecryptWithUserKey(privateKey, DecodeString(usersEncryptedLazenkey))
 
 	copy(lazenkey[:], result[:32])
 	return &lazenkey

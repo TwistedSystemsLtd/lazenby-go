@@ -14,22 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 package cmd
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/TwistedSystemsLtd/lazenby-go/core"
-	"github.com/TwistedSystemsLtd/lazenby-go/lazendata"
 	"github.com/spf13/cobra"
-	"github.com/ugorji/go/codec"
-	"log"
 )
 
-// showCmd represents the show command
-var showCmd = &cobra.Command{
-	Use:   "show",
+// adduserCmd represents the adduser command
+var adduserCmd = &cobra.Command{
+	Use:   "adduser",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -38,44 +33,35 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("show called")
-		var lazenfilename = cmd.Flag("file").Value.String()
-		lazenpath := core.GetLazenpath(lazenfilename)
+		fmt.Println("adduser called")
+		newUserPublicKey := core.DecodeString(args[0])
 
-		lazenfile := core.ReadLazenFile(lazenpath)
+		lazenpath := cmd.Flag("file").Value.String()
+		lazenfile := openLazenfile(lazenpath)
 
-		publicKey, privateKey := core.ReadUserKeys(core.Lazenhome())
+		authorisedPublicKey, authorisedPrivateKey := core.ReadUserKeys(core.Lazenhome())
 
-		log.Println("User publickey=", core.EncodeString(publicKey[:]))
+		lazenkey := core.DecryptLazenkey(authorisedPublicKey, authorisedPrivateKey, lazenfile)
 
-		lazenkey := core.DecryptLazenkey(publicKey, privateKey, lazenfile)
+		var newPublicKeyBytes [32]byte
+		copy(newPublicKeyBytes[:], newUserPublicKey)
+		newUserLazenkey := core.EncryptWithUserKey(&newPublicKeyBytes, authorisedPrivateKey, authorisedPublicKey, lazenkey[:])
 
-		parsedSecret := &lazendata.RevealedSecret{}
-
-		for _, secret := range lazenfile.Secrets {
-			secretBytes := core.DecodeString(secret)
-
-			revealedBytes := bytes.NewBuffer(core.DecryptWithLazenkey(lazenkey, secretBytes))
-
-			var ch codec.CborHandle
-			dec := codec.NewDecoderBytes(revealedBytes.Bytes(), &ch)
-			dec.Decode(&parsedSecret)
-
-			fmt.Println(parsedSecret.Name, "=", parsedSecret.Value)
-		}
+		lazenfile.Lazenkeys[core.EncodeString(newUserPublicKey)] = core.EncodeString(newUserLazenkey)
+		core.SaveLazenFile(lazenpath, lazenfile)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(showCmd)
+	rootCmd.AddCommand(adduserCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// showCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// adduserCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// showCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// adduserCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
